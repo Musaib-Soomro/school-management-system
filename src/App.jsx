@@ -1,0 +1,73 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './contexts/AuthContext'
+import LoginPage from './pages/LoginPage'
+import Dashboard from './pages/Dashboard'
+import ProtectedRoute from './components/auth/ProtectedRoute'
+import AdminDashboard from './pages/admin/AdminDashboard'
+import StudentsPage from './pages/admin/StudentsPage'
+import TeacherDashboard from './pages/teacher/TeacherDashboard'
+import ParentDashboard from './pages/parent/ParentDashboard'
+import ClassesPage from './pages/admin/ClassesPage'
+import PendingApproval from './pages/PendingApproval'
+import UserManagementPage from './pages/admin/UserManagementPage'
+import AdminAttendancePage from './pages/admin/AttendancePage'
+import TeacherAttendancePage from './pages/teacher/AttendancePage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
+import ProfilePage from './pages/ProfilePage'
+import ApprovalQueuePage from './pages/admin/ApprovalQueuePage'
+import StudentDetailPage from './pages/admin/StudentDetailPage'
+import TeachersPage from './pages/admin/TeachersPage'
+import ParentsPage from './pages/admin/ParentsPage'
+import FeesPage from './pages/admin/FeesPage'
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen w-full bg-slate-50 font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/pending" element={<ProtectedRoute><PendingApproval /></ProtectedRoute>} />
+            
+            {/* Landing dispatcher */}
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            
+            {/* General Profile Route */}
+            <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+
+            {/* Admin Routes */}
+            <Route path="/admin/dashboard" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/students" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><StudentsPage /></ProtectedRoute>} />
+            <Route path="/admin/students/:id" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><StudentDetailPage /></ProtectedRoute>} />
+            <Route path="/admin/teachers" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><TeachersPage /></ProtectedRoute>} />
+            <Route path="/admin/parents" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><ParentsPage /></ProtectedRoute>} />
+            <Route path="/admin/classes" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><ClassesPage /></ProtectedRoute>} />
+            <Route path="/admin/users" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><UserManagementPage /></ProtectedRoute>} />
+            <Route path="/admin/attendance" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><AdminAttendancePage /></ProtectedRoute>} />
+            <Route path="/admin/fees" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><FeesPage /></ProtectedRoute>} />
+            <Route path="/admin/approvals" element={<ProtectedRoute allowedRoles={['admin', 'super_admin']}><ApprovalQueuePage /></ProtectedRoute>} />
+            <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+
+            {/* Teacher Routes */}
+            <Route path="/teacher/dashboard" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherDashboard /></ProtectedRoute>} />
+            <Route path="/teacher/attendance" element={<ProtectedRoute allowedRoles={['teacher']}><TeacherAttendancePage /></ProtectedRoute>} />
+            <Route path="/teacher" element={<Navigate to="/teacher/dashboard" replace />} />
+
+            {/* Parent Routes */}
+            <Route path="/parent/dashboard" element={<ProtectedRoute allowedRoles={['parent']}><ParentDashboard /></ProtectedRoute>} />
+            <Route path="/parent" element={<Navigate to="/parent/dashboard" replace />} />
+
+            {/* Fallbacks */}
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
+  )
+}
+
+export default App
