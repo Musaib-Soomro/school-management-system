@@ -20,6 +20,7 @@ import StudentDetailPage from './pages/admin/StudentDetailPage'
 import TeachersPage from './pages/admin/TeachersPage'
 import ParentsPage from './pages/admin/ParentsPage'
 import FeesPage from './pages/admin/FeesPage'
+import LandingPage from './pages/landing/LandingPage'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Router>
         <div className="min-h-screen w-full bg-slate-50 font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
           <Routes>
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
@@ -61,7 +63,6 @@ function App() {
             <Route path="/parent" element={<Navigate to="/parent/dashboard" replace />} />
 
             {/* Fallbacks */}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </div>
