@@ -9,6 +9,7 @@ export default {
       fontFamily: {
         sans: ['DM Sans', 'system-ui', 'sans-serif'],
         display: ['Cormorant Garamond', 'Georgia', 'serif'],
+        urdu: ["'Noto Nastaliq Urdu'", 'serif'],
       },
       colors: {
         // Theme colors for modern, premium look
